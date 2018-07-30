@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint .",
+    "lint-strict": "eslint . --max-warnings=0",
+    "prettier": "prettier --config .prettierrc --write"
   },
   "dependencies": {
     "react": "16.4.1",
@@ -22,11 +25,30 @@
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.9.1",
     "eslint-plugin-react-native": "3.2.1",
+    "husky": "1.0.0-rc.13",
     "jest": "23.3.0",
+    "lint-staged": "7.2.0",
     "prettier": "1.14.0",
     "react-test-renderer": "16.4.1"
   },
   "jest": {
     "preset": "react-native"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "eslint . --max-warnings=0"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier",
+      "eslint .",
+      "git add"
+    ],
+    "*.json": [
+      "prettier",
+      "git add"
+    ]
   }
 }
